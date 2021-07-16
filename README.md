@@ -13,7 +13,7 @@ Create an app called "dashboard".
 
 ## Create Models:
 * Declare a `Team` model class with `name`, `title`, `description` and `image`. 
-## I created a Team model with a many to many field with the built-in django model and then created a UserImage model to store the user pictures.
+## I created a Team model with a many to many field with the built-in django User model and then created a UserImage model to store the user pictures.
 
 * In the `dashboard` app, create a model class called `Project`.
 * In the `Project` model, declare the following fields; `title`, `timestamp`, `activity-list`, `team`. (the team will be a `foreign` key to the `Team` model class).
