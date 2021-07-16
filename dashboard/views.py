@@ -9,7 +9,10 @@ def dash_board2(request):
 
 
 def dash_board(request):
+    # fetch all projects from db
     projects = Project.objects.all()
+
+    # fetch the 4 most recent projects
     recentProjects = Project.objects.order_by('-timestamp').all()[:4]
 
     return render(request, 'dashboard/index.html', context={

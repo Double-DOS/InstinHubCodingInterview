@@ -13,7 +13,7 @@ class Team(models.Model):
 
 
 class UserImage(models.Model):
-    image = models.ImageField()
+    image = models.ImageField(upload_to='images/')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
