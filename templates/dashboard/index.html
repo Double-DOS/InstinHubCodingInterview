@@ -1,0 +1,125 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'dashboard/icons.css'%}">
+    <link rel="stylesheet" href="{%static 'dashboard/style.css'%}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+</head>
+<body>
+    <div class="dashboard"><!-- Dashboard -->
+        <section class="navigation"><!-- Navigation -->
+            <img src="{%static 'dashboard/logo-thumbnail.png'%}" alt="InstinctHub Logo" class="logo">
+
+            <div>
+                <span class="material-icons-outlined"> dashboard </span>
+                <span class="material-icons-outlined"> trending_up </span>
+                <span class="material-icons-outlined"> people_alt </span>
+                <span class="material-icons-outlined"> insert_invitation </span>
+                <span class="material-icons-outlined">settings_suggest</span>
+            </div>
+
+            <img src="{%static 'dashboard/logo-thumbnail.png'%}" alt="User Image" class="user">
+
+        </section><!-- Navigation End -->
+
+        <section class="main"><!-- Main -->
+            <div class="search"><!-- Search -->
+                <form action="">
+                    <input type="text" name="search" id="search" placeholder="Search Here">
+                    <span class="material-icons-outlined"> search </span>
+                </form>
+
+                <div class="notification">
+                    <span class="material-icons-outlined"> notifications </span>
+                    <span class="material-icons-outlined"> edit </span>
+                </div>
+            </div><!-- Search End -->
+
+            <div class="title">
+                <h1>My Project</h1>
+                <form action="#">
+                    <label for="projects">Sort By</label>
+                    <select name="projects" id="projects">
+                        <option value="recent">Recent Project</option>
+                        <option value="finished">Finished Project</option>
+                        <option value="ongoing">Ongoing Project</option>
+                        <option value="stalled">Stalled Project</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="project_list"><!-- Project List: Loop over all projects-->
+{% for project in projects%}
+                <div class="project"><!-- Project: One Project property -->
+                    <div class="category category_color1"></div>
+                    <h2>{{project.title}}</h2>
+                    <p>{{project.timestamp|naturaltime}}</p>
+
+                    <ul class="activity">
+                        {% for activity in project.activities.all %}
+                        <li>{{activity.item}}</li>
+                        {% endfor%}
+                    </ul>
+
+                    <div class="meta">
+                        <div class="contributors">
+                            {%for user in project.team.users.all%}
+                            <img src="{{user.userimage.image.url}}" alt="" class="stack">
+                            <!-- <img src="assets/img/2.jpg" alt="" class="stack"> -->
+                            <!-- <img src="assets/img/3.jpg" alt="" class="stack"> -->
+                            {%endfor%}
+                        </div>
+                        <span class="material-icons-outlined">more_vert</span>
+                    </div>
+                </div><!-- Project1 End -->
+                {% endfor %}
+
+                
+            </div><!-- Project List End -->
+
+        </section><!-- Main End -->
+
+        <section class="secondary"><!-- Secondary -->
+            <div class="chart">
+                <h2>Total Project</h2>
+                <canvas id="myChart" width="400" height="400"></canvas>
+
+                <div class="complete">
+                    <h3>3 Completed</h3>
+                    <p>from 5 projects</p>
+                </div>
+            </div>
+
+            <div class="recent_project"><!-- Recent Project -->
+                
+                {%for recent in recent_projects%}
+                <div class="listing">
+                    <div class="title">
+                        <div class="category category_color2"></div>
+                        <h2>{{recent.title}}</h2>
+                        <p>by Musa Ismail</p>
+                    </div>
+                    <span class="material-icons-outlined">more_vert</span>
+                </div>
+                {%endfor%}
+                
+            </div><!-- Recent Project End -->
+
+        </section><!-- Secondary End -->
+
+    </div><!-- Dashboard End-->
+    
+    <script src="{% static 'dashboard/script.js' %}"></script>
+</body>
+</html>
